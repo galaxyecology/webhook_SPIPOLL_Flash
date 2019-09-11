@@ -50,7 +50,7 @@ I receive this stdout:
 
 Where the URL allows to download the picture and display it
 
-![result](MMOS_Galaxy_bee.png)
+![result](./img/MMOS_Galaxy_bee.png)
 
 So idea is to use this on 2 different manners:
 
