@@ -54,7 +54,7 @@ Where the URL allows to download the picture and display it
 
 So idea is to use this on 2 different manners:
 
-- first, to display a randomizely selected picture of bee once a galaxy user submitted a job using webhook functionality in the same spirit than you made with PhDcomics
+- first, to display a randomizely selected picture of fly once a galaxy user submitted a job using webhook functionality in the same spirit than you made with PhDcomics
 - second, to import a picture into a Galaxy history, so the user can use bioimaging tools inside Galaxy to treat / analyse the picture and send the results back to MMOS. Here we will use a "classical Galaxy tool" to get picture and another one to send analysis results
 
 
