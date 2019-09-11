@@ -1,0 +1,140 @@
+<html>
+    <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+
+<style type='text/css'>
+
+.card {
+    border: none;
+}
+/* overlay-container needed to position the overlay. Adjust the width as needed */
+
+.overlay-container {
+    cursor: pointer;
+    position: relative;
+    width: 148px;
+    max-width: 800px;
+        border: 5px solid transparent;
+}
+
+/* Make the image to responsive */
+
+.image-overlay {
+    width: 100%;
+    height: auto;
+}
+
+/* The overlay effect (full height and width) - lays on top of the overlay-container and over the image */
+
+.hidden {
+    visibility: hidden;
+}
+
+.dim {
+    transition: .3s ease;
+    opacity: 0.5;
+}
+
+.selected {
+    border: 5px solid green;
+}
+
+</style>
+<body>
+
+    <div class="container-fluid">
+        <div class="d-flex flex-column justify-content-center" style="text-align:center">
+			<div>
+				<h3>Citizen Science Project</h3>
+			</div>
+			<div>
+			Help us identify the sex of these marmalade hoverflies! Look at the image, and then select a label below that you think fits best. These pictures are of <i>Episyrphus balteatus</i> which you can read more about on <a href="https://en.wikipedia.org/wiki/Episyrphus_balteatus" target="_blank">Wikipedia</a>!
+			</div>
+			{% if thanks %}
+			<div class="alert alert-success" role="alert"><b>Awesome!</b> Thanks for contributing to science. Want to do another?</div>
+			{% endif %}
+		</div>
+        <div class="d-flex flex-row justify-content-center">
+            <div>
+                <img class="image-overlay img-fluid rounded float-left" src="{{ t.assets.url }}">
+            </div>
+        </div>
+        <div class="row justify-content-md-center mt-3">
+            <div class="">
+                <div class="card-group">
+                    <div class="card">
+                        <div id="male-container" class="overlay-container">
+                            <img style="width:138px;" class="image-overlay img-btn card-img-top" src="./img/male.png" alt="male">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div id="likelyMale-container" class="overlay-container" style="padding-top: 3.5em;text-align:center;height:100%;">
+                            Likely male
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div id="cantSee-container" class="overlay-container" style="padding-top: 3.5em;text-align:center;height:100%;">
+                            Cannot See
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div id="likelyFemale-container" class="overlay-container" style="padding-top: 3.5em;text-align:center;height:100%;">
+                            Likely female
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div  id="female-container"class="overlay-container">
+                            <img style="width:138px;" class="image-overlay img-btn card-img-top" src="./img/female.png" alt="female">
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 1em;">
+                    <form method="POST">
+                        <input type="hidden" name="sex" id="sex" value="unknown">
+                        <input type="hidden" name="task_id"      id="task_id"      value="{{ t.id }}">
+                        <input type="hidden" name="task_created" id="task_created" value="{{ created }}">
+                        <button id="submit-button" type="submit" class="btn btn-primary hidden">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript">
+        var containers = ["female", "likelyFemale", "cantSee", "likelyMale", "male"];
+
+        function others(mine){
+            var n = [];
+            for(var k in containers) {
+                if(containers[k] != mine){
+                    n.push("#" + containers[k] + "-container");
+                }
+            }
+            return n;
+        }
+
+        $(".overlay-container").on("click", function(event){
+            var c = event.currentTarget.id;
+            var c_id = c.replace('-container', '');
+            console.log(c);
+
+            // Dim the others
+            var other = others(c_id);
+            for(var k in other){
+                $(other[k]).addClass("dim");
+                $(other[k]).removeClass("selected");
+            }
+
+            // And undim ourselves
+            $("#" + c).removeClass("dim");
+            $("#" + c).addClass("selected");
+            $("#sex").val(c_id);
+
+            $("#submit-button").removeClass("hidden");
+        });
+    </script>
+
+</body>
+</html>
