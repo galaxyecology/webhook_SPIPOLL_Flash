@@ -11,10 +11,10 @@ import yaml
 class Client:
     def __init__(self, MMOS_API_KEY, MMOS_API_SECRET, **kwargs):
         self.protocol = "https"
-        self.host = "api.depo.mmos.blue"
+        self.host = "api.mmos.red"
         self.port = 443
         self.version = "v2"
-        self.game = "dev-yvan-le-bras-mnhn-fr"
+        self.game = "spipoll"
         self.apiKey = {"key": MMOS_API_KEY, "secret": MMOS_API_SECRET}
 
         self.playerCode = "YVAN001"
