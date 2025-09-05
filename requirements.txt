@@ -2,3 +2,6 @@ Flask==1.1.1
 gunicorn==19.9.0
 PyYAML==5.4
 requests==2.22.0
+Jinja2<=3.0.3  #  keep `Jinja2` working with `Flask==1.1.1` 
+itsdangerous<=2.0.1  # keep `itsdangerous` working with `Flask==1.1.1`
+werkzeug<=2.0.3  # keep `werkzeug` working with `Flask==1.1.1`
